@@ -1,0 +1,35 @@
+.lights {
+    display: flex;
+    justify-content: space-around;
+}
+
+.lights div {
+    display: inherit;
+    flex-direction: column;
+    background-color: black;
+}
+
+.light {
+    font-size: 50px;
+}
+
+.blackout {
+    visibility: hidden;
+}
+
+.traffic.light.red {
+    color: red;
+}
+.traffic.light.orange {
+    color: orange;
+}
+.traffic.light.green {
+    color: lime;
+}
+
+.crossing.light.red {
+    color: red;
+}
+.crossing.light.orange {
+    color: orange;
+}

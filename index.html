@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crossroad</title>
+
+    <link rel="stylesheet" href="./style/style.css">
+
+    <script src="./EventEmitter.js"></script>
+    <script src="./model/CrossingLightModel.js"></script>
+    <script src="./model/TrafficLightModel.js"></script>
+    <script src="./View.js"></script>
+    <script src="./Controller.js"></script>
+    <script src="./App.js"></script>
+</head>
+<body>
+    <div id="call"></div>
+    <div class="lights">
+        <div>
+            <span class="traffic light red blackout">&#x25cf;</span>
+            <span class="traffic light orange blackout">&#x25cf;</span>
+            <span class="traffic light green">&#x25cf;</span>
+        </div>
+        <div>
+            <span class="traffic light red blackout">&#x25cf;</span>
+            <span class="traffic light orange blackout">&#x25cf;</span>
+            <span class="traffic light green">&#x25cf;</span>
+        </div>
+    </div>
+    <br>
+    <div class="lights">
+        <div>
+            <span class="crossing light red">&#x25cf;</span>
+            <span class="crossing light orange blackout">&#x25cf;</span>
+        </div>
+        <div>
+            <span class="crossing light red">&#x25cf;</span>
+            <span class="crossing light orange blackout">&#x25cf;</span>
+        </div>
+    </div>
+
+    <div id="deer"></div>
+</body>
+</html>
