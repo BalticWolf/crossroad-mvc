@@ -9,67 +9,93 @@ function Controller(trafficModel, crossingModel, view) {
 
 Controller.prototype.init = function() {
     this._locked = false;
+
     this._view.on('call', this.handleCall.bind(this));
+
     this._tModel.on('trafficGreen', this.handleTrafficGreen.bind(this));
     this._tModel.on('trafficOrange', this.handleTrafficOrange.bind(this));
     this._tModel.on('trafficRed', this.handleTrafficRed.bind(this));
-
-    this._view.on('crossingOrange', this.handleCrossingOrange.bind(this));
 };
 
+/**
+ * This controls the system's behavior when the 'Call' button is pushed
+ */
 Controller.prototype.handleCall = function() {
+
+    // only run if the button is activated
     if (!this._locked){
-        this._locked = true; // memorize the 'Call' button has been pushed
+
+        // deactivate the 'Call' button
+        this._locked = true;
+
+        // start the crossing light to blink red (change every half second)
         this._cModel.setColor('black');
         this._interval = setInterval(function () {
             var color = this._cModel.getColor() !== 'red' ? 'red' : 'black';
             this._cModel.setColor(color);
         }.bind(this), 500);
 
-        setTimeout(function() {
-            this._cModel.setColor('orange');
-        }.bind(this), 6000);
-
+        // set the traffic light to turn orange after 3 seconds
         setTimeout(function() {
             this._tModel.setColor('orange');
         }.bind(this), 3000);
     }
 };
 
+/**
+ * This controls the system's behavior when the traffic light goes green
+ */
 Controller.prototype.handleTrafficGreen = function() {
+
+    // reset the crossing light to steady red
+    this._cModel.setColor('red');
+
+    // reactivate the 'Call' button after 180 seconds
     setTimeout(function() {
-        this._locked = false; // reset after 180 seconds
+        this._locked = false;
     }.bind(this), 180000);
 };
 
-Controller.prototype.handleTrafficOrange = function() {
-    setTimeout(function() {
-        // Traffic light
-        this._tModel.setColor('red');
 
-        // Crossing lights are blinking orange
-        this._interval = setInterval(function () {
-            var color = this._cModel.getColor() !== 'orange' ? 'orange' : 'black';
-            this._cModel.setColor(color);
-        }.bind(this), 500);
+/**
+ * This controls the system's behavior when the traffic light goes orange
+ */
+Controller.prototype.handleTrafficOrange = function() {
+
+    // stop the red blinking
+    clearInterval(this._interval);
+    this._interval = null;
+
+    // set the crossing light to turn steady orange
+    this._cModel.setColor('orange');
+
+    // set the traffic light to turn red after 3 seconds
+    setTimeout(function() {
+        this._tModel.setColor('red');
     }.bind(this), 3000);
 };
 
+/**
+ * This controls the system's behavior when the traffic light goes orange
+ */
 Controller.prototype.handleTrafficRed = function() {
+
+    // set the traffic light to turn back green after 22 seconds
     setTimeout(function() {
         this._tModel.setColor('green');
     }.bind(this), 22000);
 
-    // make the 5 last seconds not blink but steady orange
-/*    setTimeout(function() {
+    // start the crossing light to blink orange (change every half second)
+    this._cModel.setColor('black');
+    this._interval = setInterval(function () {
+        var color = this._cModel.getColor() !== 'orange' ? 'orange' : 'black';
+        this._cModel.setColor(color);
+    }.bind(this), 500);
+
+    // set the crossing light to turn steady orange after 17 seconds
+    setTimeout(function() {
         clearInterval(this._interval);
         this._interval = null;
         this._cModel.setColor('orange');
-    }.bind(this), 17000);*/
-};
-
-Controller.prototype.handleCrossingOrange = function() {
-    setTimeout(function() {
-        this._cModel.setColor('red');
-    }.bind(this), 22000);
+    }.bind(this), 17000);
 };

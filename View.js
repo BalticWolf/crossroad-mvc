@@ -17,6 +17,9 @@ View.prototype.init = function() {
     this._cModel.on('crossingLightChanged', this.displayCrossingLight.bind(this))
 };
 
+/**
+ * This controls the traffic light display
+ */
 View.prototype.displayTrafficLight = function() {
     var color = this._tModel.getColor();
     var lights = document.querySelectorAll('.traffic.light');
@@ -33,9 +36,11 @@ View.prototype.displayTrafficLight = function() {
         light.className = 'traffic light ' + color;
     });
 
-
 };
 
+/**
+ * This controls the crossing light display
+ */
 View.prototype.displayCrossingLight = function() {
     var color = this._cModel.getColor();
     var lights = document.querySelectorAll('.crossing.light');
