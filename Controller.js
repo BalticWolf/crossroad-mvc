@@ -76,7 +76,7 @@ Controller.prototype.handleTrafficOrange = function() {
 };
 
 /**
- * This controls the system's behavior when the traffic light goes orange
+ * This controls the system's behavior when the traffic light goes red
  */
 Controller.prototype.handleTrafficRed = function() {
 
